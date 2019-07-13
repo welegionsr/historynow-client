@@ -3,12 +3,14 @@ import "./LoginForm.css";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { IUserType } from "../common/interfaces";
+import { IUserType } from "../../common/interfaces";
+import { Link, Redirect } from "react-router-dom";
 
 interface ILoginFormState {
   userNameValue: string;
   passwordValue: string;
   validated: boolean;
+  done: boolean;
 }
 
 export class LoginForm extends React.Component<{}, ILoginFormState> {
@@ -17,11 +19,12 @@ export class LoginForm extends React.Component<{}, ILoginFormState> {
     this.state = {
       userNameValue: "",
       passwordValue: "",
-      validated: false
+      validated: false,
+      done: false
     };
   }
   render() {
-    const { validated } = this.state;
+    const { validated, done } = this.state;
     return (
       <Card className="login-form">
         <Card.Body>
@@ -64,6 +67,10 @@ export class LoginForm extends React.Component<{}, ILoginFormState> {
             </Button>
           </Form>
         </Card.Body>
+        <Card.Footer>
+            <Link to="/register">Never signed up before? Lets go!</Link>
+        </Card.Footer>
+        {done ? <Redirect to="/" /> : null}
       </Card>
     );
   }
@@ -83,15 +90,16 @@ export class LoginForm extends React.Component<{}, ILoginFormState> {
   handleSubmit: (event: React.BaseSyntheticEvent) => void = event => {
     const form = event.currentTarget;
     const URL = "http://localhost:5000/login";
+    let validated = false;
 
     event.preventDefault();
     event.stopPropagation();
     if (form.checkValidity() === false) {
     } else {
       const credentials = {
-          username: this.state.userNameValue,
-          password: this.state.passwordValue
-      }
+        username: this.state.userNameValue,
+        password: this.state.passwordValue
+      };
       //send login request to server
       fetch(URL, {
         method: "POST",
@@ -106,16 +114,21 @@ export class LoginForm extends React.Component<{}, ILoginFormState> {
 
           return response.json();
         })
-        .catch(reason => {
-          console.log(reason);
-        })
-        .then((user: IUserType) => {
-          console.log("Welcome ", user.firstName, user.lastName);
-        });
+        .then(
+          (user: IUserType) => {
+            console.log("Welcome ", user.firstName, user.lastName);
+
+            this.setState({
+              validated: true,
+              done: true
+            });
+          },
+          reason => {
+            console.log(reason);
+          }
+        );
     }
 
-    this.setState({
-      validated: true
-    });
+
   };
 }

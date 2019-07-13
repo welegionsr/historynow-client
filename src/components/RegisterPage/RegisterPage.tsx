@@ -1,15 +1,15 @@
 import React from "react";
-import "./LoginPage.css";
-import { LoginForm } from "./LoginForm/LoginForm";
+import "./RegisterPage.css";
 import Container from "react-bootstrap/Container";
+import {RegisterForm} from "./RegisterForm/RegisterForm";
 import Row from "react-bootstrap/Row";
 
-export class LoginPage extends React.Component {
+export class RegisterPage extends React.Component {
   render() {
     return (
       <Container>
         <Row className="justify-content-center">
-          <LoginForm />
+          <RegisterForm />
         </Row>
       </Container>
     );

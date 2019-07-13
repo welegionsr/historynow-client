@@ -4,6 +4,8 @@ import EventCardList from "./components/EventCardList/EventCardList";
 import HeaderNav from "./components/HeaderNav/HeaderNav";
 import { Route, Link, Switch } from "react-router-dom";
 import { LoginPage } from "./components/LoginPage/LoginPage";
+import { RegisterPage } from "./components/RegisterPage/RegisterPage";
+import { isCompletionStatement } from "@babel/types";
 
 class App extends React.Component {
   render() {
@@ -30,6 +32,7 @@ class App extends React.Component {
           />
 
           <Route path="/login" component={LoginPage} />
+          <Route path="/register" component={RegisterPage} />
         </Switch>
       </div>
     );
@@ -37,3 +40,4 @@ class App extends React.Component {
 }
 
 export default App;
+

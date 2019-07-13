@@ -66,10 +66,9 @@ export class LoginForm extends React.Component<{}, ILoginFormState> {
               Login
             </Button>
           </Form>
+          <hr/>
+          <Link to="/register">Never signed up before? Lets go!</Link>
         </Card.Body>
-        <Card.Footer>
-            <Link to="/register">Never signed up before? Lets go!</Link>
-        </Card.Footer>
         {done ? <Redirect to="/" /> : null}
       </Card>
     );

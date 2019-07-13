@@ -5,15 +5,10 @@ import HeaderNav from "./components/HeaderNav/HeaderNav";
 import { Route, Link, Switch } from "react-router-dom";
 import { LoginPage } from "./components/LoginPage/LoginPage";
 import { RegisterPage } from "./components/RegisterPage/RegisterPage";
-import { isCompletionStatement } from "@babel/types";
 
 class App extends React.Component {
   render() {
     return (
-      // <div>
-      //   <HeaderNav />
-      //   <EventCardList />
-      // </div>
       <div>
         <HeaderNav />
         <Switch>

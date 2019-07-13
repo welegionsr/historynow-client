@@ -7,9 +7,9 @@ import Row from "react-bootstrap/Row";
 export class RegisterPage extends React.Component {
   render() {
     return (
-      <Container>
+      <Container fluid className="register-page">
         <Row className="justify-content-center">
-          <RegisterForm />
+          <RegisterForm/>
         </Row>
       </Container>
     );

@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import EventCardList from "./components/EventCardList/EventCardList";
+import HeaderNav from "./components/HeaderNav/HeaderNav";
+import { Route, Link, Switch } from "react-router-dom";
+import { LoginPage } from "./components/LoginPage/LoginPage";
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      // <div>
+      //   <HeaderNav />
+      //   <EventCardList />
+      // </div>
+      <div>
+        <HeaderNav />
+        <Switch>
+          <Route exact path="/" component={EventCardList} />
+          <Route
+            path="/wishlist"
+            render={props => (
+              <div>this will show the Wishlist sometime soon</div>
+            )}
+          />
+          <Route
+            path="/admin"
+            render={props => (
+              <div>This will be the admin dashboard soon enough</div>
+            )}
+          />
+
+          <Route path="/login" component={LoginPage} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;

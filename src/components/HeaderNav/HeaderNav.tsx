@@ -1,23 +1,35 @@
-import React from 'react';
-import './HeaderNav.css';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
+import React from "react";
+import "./HeaderNav.css";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import { Link } from "react-router-dom";
+import NavLink from "react-bootstrap/NavLink";
+import { LinkContainer } from "react-router-bootstrap";
+
 
 class HeaderNav extends React.Component {
-  render (){
+  render() {
     return (
       <Navbar bg="light" className="header" expand="lg">
-          <Navbar.Brand href="/">HistoryNow</Navbar.Brand>
-          <Navbar.Toggle/>
-          <Navbar.Collapse id="header-navbar">
-              <Nav className="mr-auto">
-                  <Nav.Link href="wishlist">Wishlist</Nav.Link>
-                  <Nav.Link href="admin">Admin Dashboard</Nav.Link>
-                  <Nav.Link href="login">Login</Nav.Link>
-              </Nav>
-          </Navbar.Collapse>
+        <Navbar.Brand>
+          <Link to="/">HistoryNow</Link>
+        </Navbar.Brand>
+        <Navbar.Toggle />
+        <Navbar.Collapse id="header-navbar">
+          <Nav className="mr-auto">
+            <LinkContainer to="/wishlist">
+              <Nav.Link>Wishlist</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/admin">
+              <Nav.Link>Admin Dashboard</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/login">
+              <Nav.Link>Login</Nav.Link>
+            </LinkContainer>
+          </Nav>
+        </Navbar.Collapse>
       </Navbar>
-    )
+    );
   }
 }
 

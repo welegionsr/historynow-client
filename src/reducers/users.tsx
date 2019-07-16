@@ -25,7 +25,7 @@ const users = (state = {}, action: any) => {
 
         case LOGOUT_USER: {
             //logout the current user
-
+            return {...state, currentUser: null}
         }
 
         default:

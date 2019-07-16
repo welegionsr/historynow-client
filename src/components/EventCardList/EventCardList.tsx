@@ -10,10 +10,11 @@ const URL = "http://localhost:5000/events";
 export interface IEventCardListProps {
   autoUpdate?: boolean;
   updateInterval?: number;
+  onEventsPulled: (events: IHistoryEvent[]) => void;
+  events: IHistoryEvent[];
 }
 
 export interface IEventCardListState {
-  eventsData: IHistoryEvent[];
   isLoading: boolean;
 }
 
@@ -24,28 +25,31 @@ export class EventCardList extends Component<
   constructor(props: IEventCardListProps) {
     super(props);
     this.state = {
-      eventsData: [],
       isLoading: true
     };
+  }
 
-    this.getEventsData();
+  componentDidMount () {
+    console.log(this.props);
+    if (this.props.events.length === 0) this.getEventsData();
   }
 
   render() {
-    const { eventsData, isLoading } = this.state;
+    const { isLoading } = this.state;
+    const { events } = this.props;
     return (
       <Container className="event-list">
         <CardColumns>
           {!isLoading
-            ? eventsData.map((event, index) => {
+            ? events.map((event, index) => {
                 return (
                   // <Col sm={12} md={4} lg={3}>
-                    <EventCard
-                      event={event}
-                      key={index}
-                      onDelete={this.handleDelete}
-                      onUpdate={this.handleUpdate}
-                    />
+                  <EventCard
+                    event={event}
+                    key={index}
+                    onDelete={this.handleDelete}
+                    onUpdate={this.handleUpdate}
+                  />
                   // </Col>
                 );
               })
@@ -59,45 +63,44 @@ export class EventCardList extends Component<
     await fetch(URL)
       .then(res => res.json())
       .then(data => {
+        console.log("events pulled:");
         console.log(data);
-        this.setState(
-          {
-            eventsData: data
-          },
-          () => {
-            this.setState({
-              isLoading: false
-            });
-          }
-        );
+        this.props.onEventsPulled(data);
+
+        // setTimeout(() => {
+        //   console.log("props.events: "); 
+        //   console.log(this.props.events);
+          this.setState({
+            isLoading: false
+          });
+        // }, 100);
       });
   };
 
   handleDelete = (eventToDelete: IHistoryEvent) => {
-    const { eventsData } = this.state;
-    const dataAfterDelete = eventsData.filter(
-      event => event.id !== eventToDelete.id
-    );
-    this.setState({
-      eventsData: dataAfterDelete
-    });
+    // const { events } = this.state;
+    // const dataAfterDelete = eventsData.filter(
+    //   event => event.id !== eventToDelete.id
+    // );
+    // this.setState({
+    //   eventsData: dataAfterDelete
+    // });
   };
 
   handleUpdate = (eventToUpdate: IHistoryEvent) => {
-    const { eventsData } = this.state;
-    const newEventsData = eventsData;
-    const eventBeforeUpdate = eventsData.filter(
-      event => event.id === eventToUpdate.id
-    )[0];
-    let index = eventsData.indexOf(eventBeforeUpdate);
-    eventBeforeUpdate.eventTitle = eventToUpdate.eventTitle;
-    eventBeforeUpdate.eventDesc = eventToUpdate.eventDesc;
-
-    newEventsData[index] = eventBeforeUpdate;
-
-    this.setState({
-      eventsData: newEventsData
-    });
+    //   const { eventsData } = this.state;
+    //   const newEventsData = eventsData;
+    //   const eventBeforeUpdate = eventsData.filter(
+    //     event => event.id === eventToUpdate.id
+    //   )[0];
+    //   let index = eventsData.indexOf(eventBeforeUpdate);
+    //   eventBeforeUpdate.eventTitle = eventToUpdate.eventTitle;
+    //   eventBeforeUpdate.eventDesc = eventToUpdate.eventDesc;
+    //   newEventsData[index] = eventBeforeUpdate;
+    //   this.setState({
+    //     eventsData: newEventsData
+    //   });
+    // };
   };
 }
 

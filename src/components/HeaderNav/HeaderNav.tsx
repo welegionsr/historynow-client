@@ -5,9 +5,11 @@ import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { IUserType } from "../common/interfaces";
+import Button from "react-bootstrap/Button";
 
 interface IHeaderNavProps {
   user: IUserType;
+  onLogout: () => void;
 }
 
 class HeaderNav extends React.Component<IHeaderNavProps> {
@@ -28,7 +30,17 @@ class HeaderNav extends React.Component<IHeaderNavProps> {
               <Nav.Link>Admin Dashboard</Nav.Link>
             </LinkContainer>
             {user ? (
-              <span>Hello {user.firstName}!</span>
+              <div>
+                <span>Hello {user.firstName}!</span>
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    this.props.onLogout();
+                  }}
+                >
+                  Logout
+                </Button>
+              </div>
             ) : (
               <LinkContainer to="/login">
                 <Nav.Link>Login</Nav.Link>

@@ -1,6 +1,5 @@
 import React from "react";
 import "./Content.css";
-import EventCardList from "../EventCardList/EventCardList";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { LoginPage } from "../LoginPage/LoginPage";
 import { RegisterPage } from "../RegisterPage/RegisterPage";
@@ -8,6 +7,7 @@ import { WishListPage } from "../WishListPage/WishListPage";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { AdminDashboard } from "../AdminDashboard/AdminDashboard";
 import PrivateRoute from "../common/PrivateRoute/PrivateRoute";
+import EventCardListContainer from "../EventCardList/EventCardListContainer";
 
 function Content({ location, isLoggedIn }) {
   return (
@@ -19,7 +19,7 @@ function Content({ location, isLoggedIn }) {
       >
         <section className="route-section">
           <Switch location={location}>
-            <PrivateRoute exact authed={isLoggedIn} path="/" component={EventCardList} />
+            <PrivateRoute exact authed={isLoggedIn} path="/" component={EventCardListContainer} />
             <PrivateRoute authed={isLoggedIn} path="/wishlist" component={WishListPage} />
             <PrivateRoute authed={isLoggedIn} path="/admin" component={AdminDashboard} />
             <Route path="/login" component={LoginPage} />

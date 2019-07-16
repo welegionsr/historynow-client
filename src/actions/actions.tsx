@@ -36,13 +36,20 @@ export const logoutUser = () => ({
 // ---  EVENTS  ---
 //constants
 export const ADD_EVENT = "ADD_EVENT";
+export const BULK_ADD_EVENT = "BULK_ADD_EVENT";
 export const REMOVE_EVENT = "REMOVE_EVENT";
 export const UPDATE_EVENT = "UPDATE_EVENT";
+
 
 //action creators
 export const addEvent = (event:IHistoryEvent) => ({
     type: ADD_EVENT,
     event
+});
+
+export const bulkAddEvent = (events:IHistoryEvent[]) => ({
+    type: BULK_ADD_EVENT,
+    events
 });
 
 export const removeEvent = (eventId: number) => ({

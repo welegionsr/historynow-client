@@ -1,5 +1,5 @@
 import React from "react";
-import "./ContentContainer.css";
+import "./Content.css";
 import EventCardList from "../EventCardList/EventCardList";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { LoginPage } from "../LoginPage/LoginPage";
@@ -7,8 +7,9 @@ import { RegisterPage } from "../RegisterPage/RegisterPage";
 import { WishListPage } from "../WishListPage/WishListPage";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { AdminDashboard } from "../AdminDashboard/AdminDashboard";
+import PrivateRoute from "../common/PrivateRoute/PrivateRoute";
 
-function ContentContainer({ location }) {
+function Content({ location, isLoggedIn }) {
   return (
     <TransitionGroup className="transition-group">
       <CSSTransition
@@ -18,9 +19,9 @@ function ContentContainer({ location }) {
       >
         <section className="route-section">
           <Switch location={location}>
-            <Route exact path="/" component={EventCardList} />
-            <Route path="/wishlist" component={WishListPage} />
-            <Route path="/admin" component={AdminDashboard} />
+            <PrivateRoute exact authed={isLoggedIn} path="/" component={EventCardList} />
+            <PrivateRoute authed={isLoggedIn} path="/wishlist" component={WishListPage} />
+            <PrivateRoute authed={isLoggedIn} path="/admin" component={AdminDashboard} />
             <Route path="/login" component={LoginPage} />
             <Route path="/register" component={RegisterPage} />
           </Switch>
@@ -30,4 +31,4 @@ function ContentContainer({ location }) {
   );
 }
 
-export default withRouter(ContentContainer);
+export default withRouter(Content);

@@ -1,6 +1,6 @@
 import React from "react";
 import "./LoginPage.css";
-import { LoginForm } from "./LoginForm/LoginForm";
+import LoginForm from "./LoginForm/LoginForm";
 import Row from "react-bootstrap/Row";
 
 export class LoginPage extends React.Component {

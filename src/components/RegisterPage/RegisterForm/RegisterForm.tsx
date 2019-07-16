@@ -140,7 +140,6 @@ export class RegisterForm extends React.Component<{}, IRegisterFormState> {
   handleSubmit: (event: React.BaseSyntheticEvent) => void = event => {
     const form = event.currentTarget;
     const URL = "http://localhost:5000/users";
-    let redirectToHome = false;
 
     event.preventDefault();
     event.stopPropagation();

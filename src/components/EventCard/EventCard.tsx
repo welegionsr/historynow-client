@@ -1,6 +1,6 @@
 import React from "react";
 import "./EventCard.css";
-import { HistoryEvent } from "../common/interfaces";
+import { IHistoryEvent } from "../common/interfaces";
 import Card from "react-bootstrap/Card";
 import ListGroup from 'react-bootstrap/ListGroup';
 import ListGroupItem from 'react-bootstrap/ListGroupItem';
@@ -8,9 +8,9 @@ import Button from 'react-bootstrap/Button';
 
 
 export interface IEventCardProps {
-  event: HistoryEvent;
-  onDelete: (event: HistoryEvent) => void;
-  onUpdate: (event: HistoryEvent) => void;
+  event: IHistoryEvent;
+  onDelete: (event: IHistoryEvent) => void;
+  onUpdate: (event: IHistoryEvent) => void;
 }
 
 export interface IEventCardState {

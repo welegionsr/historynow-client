@@ -1,10 +1,12 @@
 import React from "react";
 import "./LoginForm.css";
+import {connect} from 'react-redux';
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { IUserType } from "../../common/interfaces";
 import { Link, Redirect } from "react-router-dom";
+import { changeLoggedUser } from "../../../actions/actions";
 
 interface ILoginFormState {
   userNameValue: string;
@@ -13,7 +15,7 @@ interface ILoginFormState {
   done: boolean;
 }
 
-export class LoginForm extends React.Component<{}, ILoginFormState> {
+class LoginForm extends React.Component<any, ILoginFormState> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -89,7 +91,6 @@ export class LoginForm extends React.Component<{}, ILoginFormState> {
   handleSubmit: (event: React.BaseSyntheticEvent) => void = event => {
     const form = event.currentTarget;
     const URL = "http://localhost:5000/login";
-    let validated = false;
 
     event.preventDefault();
     event.stopPropagation();
@@ -116,7 +117,9 @@ export class LoginForm extends React.Component<{}, ILoginFormState> {
         .then(
           (user: IUserType) => {
             console.log("Welcome ", user.firstName, user.lastName);
-
+            console.log("User details: ", user);
+            //send user details to global state
+            this.props.dispatch(changeLoggedUser(user));
             this.setState({
               validated: true,
               done: true
@@ -131,3 +134,5 @@ export class LoginForm extends React.Component<{}, ILoginFormState> {
 
   };
 }
+
+export default connect()(LoginForm);

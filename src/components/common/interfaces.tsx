@@ -1,4 +1,4 @@
-export interface HistoryEvent {
+export interface IHistoryEvent {
     eventTitle: string;
     eventDesc?: string;
     id: number;

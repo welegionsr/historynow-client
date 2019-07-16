@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "./EventCardList.css";
-import { HistoryEvent } from "../common/interfaces";
+import { IHistoryEvent } from "../common/interfaces";
 import { EventCard } from "../EventCard/EventCard";
-import Col from "react-bootstrap/Col";
 import CardColumns from "react-bootstrap/CardColumns";
 import Container from "react-bootstrap/Container";
 
@@ -14,7 +13,7 @@ export interface IEventCardListProps {
 }
 
 export interface IEventCardListState {
-  eventsData: HistoryEvent[];
+  eventsData: IHistoryEvent[];
   isLoading: boolean;
 }
 
@@ -74,7 +73,7 @@ export class EventCardList extends Component<
       });
   };
 
-  handleDelete = (eventToDelete: HistoryEvent) => {
+  handleDelete = (eventToDelete: IHistoryEvent) => {
     const { eventsData } = this.state;
     const dataAfterDelete = eventsData.filter(
       event => event.id !== eventToDelete.id
@@ -84,7 +83,7 @@ export class EventCardList extends Component<
     });
   };
 
-  handleUpdate = (eventToUpdate: HistoryEvent) => {
+  handleUpdate = (eventToUpdate: IHistoryEvent) => {
     const { eventsData } = this.state;
     const newEventsData = eventsData;
     const eventBeforeUpdate = eventsData.filter(

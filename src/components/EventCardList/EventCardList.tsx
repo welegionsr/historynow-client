@@ -4,6 +4,7 @@ import { IHistoryEvent } from "../common/interfaces";
 import { EventCard } from "../EventCard/EventCard";
 import CardColumns from "react-bootstrap/CardColumns";
 import Container from "react-bootstrap/Container";
+import Spinner from 'react-bootstrap/Spinner';
 
 const URL = "http://localhost:5000/events";
 
@@ -53,7 +54,7 @@ export class EventCardList extends Component<
                   // </Col>
                 );
               })
-            : "Loading..."}
+            : <Spinner animation="border" variant="secondary" />}
         </CardColumns>
       </Container>
     );

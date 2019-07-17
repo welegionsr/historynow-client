@@ -2,10 +2,9 @@ import React from "react";
 import "./EventCard.css";
 import { IHistoryEvent } from "../common/interfaces";
 import Card from "react-bootstrap/Card";
-import ListGroup from 'react-bootstrap/ListGroup';
-import ListGroupItem from 'react-bootstrap/ListGroupItem';
-import Button from 'react-bootstrap/Button';
-
+import ListGroup from "react-bootstrap/ListGroup";
+import ListGroupItem from "react-bootstrap/ListGroupItem";
+import Button from "react-bootstrap/Button";
 
 export interface IEventCardProps {
   event: IHistoryEvent;
@@ -30,9 +29,19 @@ export class EventCard extends React.Component<
           <Card.Text>{event.eventDesc}</Card.Text>
         </Card.Body>
         <ListGroup className="list-group-flush">
-          <ListGroupItem>Date in History: [DATE]</ListGroupItem>
-          <ListGroupItem>Price: [PRICE]</ListGroupItem>
-          <ListGroupItem>Any other detail</ListGroupItem>
+          <ListGroupItem>Date in History: {event.eventDate}</ListGroupItem>
+          <ListGroupItem>Price: ${event.price}</ListGroupItem>
+          {event.country ? (
+            <ListGroupItem>Country: {event.country}</ListGroupItem>
+          ) : null}
+          {event.city ? (
+            <ListGroupItem>City: {event.city}</ListGroupItem>
+          ) : null}
+          {event.eventDesc ? (
+            <ListGroupItem>
+              <Card.Text>{event.eventDesc}</Card.Text>
+            </ListGroupItem>
+          ) : null}
         </ListGroup>
         <Card.Body>
           <Button variant="primary">Add to Wishlist</Button>

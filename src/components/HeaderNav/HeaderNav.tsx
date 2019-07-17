@@ -15,6 +15,8 @@ interface IHeaderNavProps {
 class HeaderNav extends React.Component<IHeaderNavProps> {
   render() {
     const { user } = this.props;
+    const isAdmin = user && user.isAdmin;
+    console.log(user);
     return (
       <Navbar bg="light" className="header" expand="lg">
         <Navbar.Brand>
@@ -26,12 +28,14 @@ class HeaderNav extends React.Component<IHeaderNavProps> {
             <LinkContainer to="/wishlist">
               <Nav.Link>Wishlist</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/admin">
-              <Nav.Link>Admin Dashboard</Nav.Link>
-            </LinkContainer>
+            {isAdmin ? (
+              <LinkContainer to="/admin">
+                <Nav.Link>Admin Dashboard</Nav.Link>
+              </LinkContainer>
+            ) : null}
             {user ? (
               <div>
-                <span>Hello {user.firstName}!</span>
+                <span>Hello {user.firstName}! </span>
                 <Button
                   variant="secondary"
                   onClick={() => {

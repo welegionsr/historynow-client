@@ -8,6 +8,7 @@ export interface IHistoryEvent {
     eraId?: number;
     eventDate: string;
     price: number;
+    eventImageUrl?: string;
 }
 
 export interface IUserType {

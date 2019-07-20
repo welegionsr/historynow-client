@@ -24,6 +24,7 @@ export class EventCard extends React.Component<
     const { event } = this.props;
     return (
       <Card className="event-card">
+        {event.eventImageUrl ? <Card.Img variant="top" src={event.eventImageUrl} /> : null }
         <Card.Body>
           <Card.Title>{event.eventTitle}</Card.Title>
           <Card.Text>{event.eventDesc}</Card.Text>

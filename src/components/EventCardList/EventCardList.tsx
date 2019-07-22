@@ -44,14 +44,14 @@ export class EventCardList extends Component<
           {!isLoading ? (
             events.map((event, index) => {
               return (
-                // <Col sm={12} md={4} lg={3}>
+                //<Col sm={12} md={4} lg={3}>
                 <EventCard
                   event={event}
                   key={index}
                   onDelete={this.handleDelete}
                   onUpdate={this.handleUpdate}
                 />
-                // </Col>
+                //</Col>
               );
             })
           ) : (
@@ -73,6 +73,7 @@ export class EventCardList extends Component<
       .then(data => {
         console.log("events pulled:");
         console.log(data);
+        //send the data to store
         this.props.onEventsPulled(data);
         
         this.setState({

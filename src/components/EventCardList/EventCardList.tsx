@@ -4,7 +4,7 @@ import { IHistoryEvent } from "../common/interfaces";
 import { EventCard } from "../EventCard/EventCard";
 import CardColumns from "react-bootstrap/CardColumns";
 import Container from "react-bootstrap/Container";
-import Spinner from 'react-bootstrap/Spinner';
+import Spinner from "react-bootstrap/Spinner";
 
 const URL = "http://localhost:5000/events";
 
@@ -26,11 +26,11 @@ export class EventCardList extends Component<
   constructor(props: IEventCardListProps) {
     super(props);
     this.state = {
-      isLoading: true
+      isLoading: false
     };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     console.log(this.props);
     if (this.props.events.length === 0) this.getEventsData();
   }
@@ -41,40 +41,43 @@ export class EventCardList extends Component<
     return (
       <Container className="event-list">
         <CardColumns>
-          {!isLoading
-            ? events.map((event, index) => {
-                return (
-                  // <Col sm={12} md={4} lg={3}>
-                  <EventCard
-                    event={event}
-                    key={index}
-                    onDelete={this.handleDelete}
-                    onUpdate={this.handleUpdate}
-                  />
-                  // </Col>
-                );
-              })
-            : <Spinner animation="border" variant="secondary" />}
+          {!isLoading ? (
+            events.map((event, index) => {
+              return (
+                // <Col sm={12} md={4} lg={3}>
+                <EventCard
+                  event={event}
+                  key={index}
+                  onDelete={this.handleDelete}
+                  onUpdate={this.handleUpdate}
+                />
+                // </Col>
+              );
+            })
+          ) : (
+            <Spinner animation="border" variant="secondary" />
+          )}
         </CardColumns>
       </Container>
     );
   }
 
   getEventsData = async () => {
+    //change state to loading mode
+    this.setState({
+      isLoading: true
+    });
+    //go fetch data from db
     await fetch(URL)
       .then(res => res.json())
       .then(data => {
         console.log("events pulled:");
         console.log(data);
         this.props.onEventsPulled(data);
-
-        // setTimeout(() => {
-        //   console.log("props.events: "); 
-        //   console.log(this.props.events);
-          this.setState({
-            isLoading: false
-          });
-        // }, 100);
+        
+        this.setState({
+          isLoading: false
+        });
       });
   };
 

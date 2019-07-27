@@ -1,10 +1,12 @@
 import {connect} from 'react-redux';
 import EventCardList from './EventCardList';
-import { IHistoryEvent } from '../common/interfaces';
+import { IHistoryEvent, IStore } from '../common/interfaces';
 import { bulkAddEvent } from '../../actions/actions';
 
-const mapStateToProps = (state: any = []) => ({
-    events: state.events.data || null
+
+const mapStateToProps = (state: IStore) => ({
+    allEvents: state.events.allEvents || null,
+    wishlistEvents: state.events.wishlistEvents || null
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

@@ -1,6 +1,11 @@
 import { ADD_USER, REMOVE_USER, UPDATE_USER, CHANGE_LOGGED_USER, LOGOUT_USER } from "../actions/actions";
+import { IUserStore } from "../components/common/interfaces";
 
-const users = (state = {}, action: any) => {
+const initialUserState: IUserStore = {
+    allUsers: []
+}
+
+const users = (state: IUserStore = initialUserState, action: any) => {
     switch (action.type) {
         case ADD_USER: {
             //add user to state

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "./EventCardList.css";
 import { IHistoryEvent } from "../common/interfaces";
-import { EventCard } from "../EventCard/EventCard";
 import CardColumns from "react-bootstrap/CardColumns";
 import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
+import EventCardContainer from "../EventCard/EventCardContainer";
 
 const URL = "http://localhost:5000/events";
 
@@ -12,7 +12,8 @@ export interface IEventCardListProps {
   autoUpdate?: boolean;
   updateInterval?: number;
   onEventsPulled: (events: IHistoryEvent[]) => void;
-  events: IHistoryEvent[];
+  allEvents: IHistoryEvent[];
+  wishlistEvents: IHistoryEvent[];
 }
 
 export interface IEventCardListState {
@@ -32,20 +33,20 @@ export class EventCardList extends Component<
 
   componentDidMount() {
     console.log(this.props);
-    if (this.props.events.length === 0) this.getEventsData();
+    if (this.props.allEvents.length === 0) this.getEventsData();
   }
 
   render() {
     const { isLoading } = this.state;
-    const { events } = this.props;
+    const { allEvents } = this.props;
     return (
       <Container className="event-list">
         <CardColumns>
           {!isLoading ? (
-            events.map((event, index) => {
+            allEvents.map((event, index) => {
               return (
                 //<Col sm={12} md={4} lg={3}>
-                <EventCard
+                <EventCardContainer
                   event={event}
                   key={index}
                   onDelete={this.handleDelete}
@@ -75,7 +76,7 @@ export class EventCardList extends Component<
         console.log(data);
         //send the data to store
         this.props.onEventsPulled(data);
-        
+
         this.setState({
           isLoading: false
         });

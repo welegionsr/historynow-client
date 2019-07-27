@@ -1,14 +1,15 @@
 export interface IHistoryEvent {
-    eventTitle: string;
-    eventDesc?: string;
-    id: number;
+    title: string;
+    description?: string;
+    _id: string;
     typeOfEvent: number;
     country?: string;
     city?: string;
-    eraId?: number;
-    eventDate: string;
+    eraName: string;
+    dateInTime: string;
+    date: Date;
     price: number;
-    eventImageUrl?: string;
+    imageUrl?: string;
 }
 
 export interface IUserType {
@@ -18,5 +19,20 @@ export interface IUserType {
     firstName: string;
     lastName: string;
     isAdmin: boolean;
-    id: number;
+    _id: string;
+}
+
+export interface IEventStore {
+    allEvents: IHistoryEvent[];
+    wishlistEvents: IHistoryEvent[];
+}
+
+export interface IUserStore {
+    allUsers: IUserType[];
+    currentUser?: IUserType;
+}
+
+export interface IStore {
+    events: IEventStore;
+    users: IUserStore;
 }

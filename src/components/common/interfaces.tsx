@@ -20,11 +20,12 @@ export interface IUserType {
     lastName: string;
     isAdmin: boolean;
     _id: string;
+    savedEvents?: string[];
 }
 
 export interface IEventStore {
     allEvents: IHistoryEvent[];
-    wishlistEvents: IHistoryEvent[];
+    wishlist: string[];
 }
 
 export interface IUserStore {

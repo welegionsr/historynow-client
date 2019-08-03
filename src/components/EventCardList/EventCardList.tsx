@@ -13,7 +13,7 @@ export interface IEventCardListProps {
   updateInterval?: number;
   onEventsPulled: (events: IHistoryEvent[]) => void;
   allEvents: IHistoryEvent[];
-  wishlistEvents: IHistoryEvent[];
+  wishlistEvents: string[];
 }
 
 export interface IEventCardListState {

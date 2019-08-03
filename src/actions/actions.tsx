@@ -66,6 +66,7 @@ export const updateEvent = (event:IHistoryEvent) => ({
 // constants
 
 export const CHANGE_WISHLIST = "CHANGE_WISHLIST";
+export const GET_USER_WISHLIST = "GET_USER_WISHLIST";
 
 
 //action creators
@@ -73,4 +74,9 @@ export const CHANGE_WISHLIST = "CHANGE_WISHLIST";
 export const changeWishlist = (eventId: string) => ({
     type: CHANGE_WISHLIST,
     eventId
-})
+});
+
+export const getUserWishlist = (wishlist: string[]) => ({
+    type: GET_USER_WISHLIST,
+    wishlist
+});

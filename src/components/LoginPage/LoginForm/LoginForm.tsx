@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { IUserType } from "../../common/interfaces";
 import { Link, Redirect } from "react-router-dom";
-import { changeLoggedUser } from "../../../actions/actions";
+import { changeLoggedUser, getUserWishlist } from "../../../actions/actions";
 
 interface ILoginFormState {
   userNameValue: string;
@@ -120,6 +120,9 @@ class LoginForm extends React.Component<any, ILoginFormState> {
             console.log("User details: ", user);
             //send user details to global state
             this.props.dispatch(changeLoggedUser(user));
+            //send wishlist to global state
+            console.log("user wishlist: " + user.savedEvents);
+            if (user.savedEvents && user.savedEvents.length > 0) this.props.dispatch(getUserWishlist(user.savedEvents));
             this.setState({
               validated: true,
               done: true

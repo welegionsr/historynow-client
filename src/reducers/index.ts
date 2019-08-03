@@ -5,4 +5,4 @@ import events from './events';
 export default combineReducers({
     users,
     events
-})
+});

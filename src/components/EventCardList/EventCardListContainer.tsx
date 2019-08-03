@@ -6,7 +6,7 @@ import { bulkAddEvent } from '../../actions/actions';
 
 const mapStateToProps = (state: IStore) => ({
     allEvents: state.events.allEvents || null,
-    wishlistEvents: state.events.wishlistEvents || null
+    wishlistEvents: state.events.wishlist || null
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

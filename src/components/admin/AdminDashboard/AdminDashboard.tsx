@@ -3,6 +3,7 @@ import "./AdminDashboard.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
+import { AddEventModal } from "../AddEventModal/AddEventModal";
 
 export class AdminDashboard extends React.Component {
   render() {
@@ -11,7 +12,8 @@ export class AdminDashboard extends React.Component {
         <Row className="justify-content-center">
           <Card>
               <Card.Body>
-                  this will be the admin dashboard soon enough!
+                  <Card.Title>Add an Event</Card.Title>
+                  <AddEventModal/>
               </Card.Body>
           </Card>
         </Row>

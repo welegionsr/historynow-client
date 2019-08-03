@@ -6,7 +6,7 @@ import { findWishlistEventById } from '../../selectors/events-selectors';
 
 const mapStateToProps = (state: IStore, ownProps: IEventCardProps) => ({
     ...ownProps,
-    userId: state.users.currentUser ? state.users.currentUser._id : null,
+    user: state.users.currentUser ? state.users.currentUser : null,
     inWishlist: findWishlistEventById(state.events, ownProps.event._id)
   });
   

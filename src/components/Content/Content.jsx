@@ -5,9 +5,9 @@ import { LoginPage } from "../LoginPage/LoginPage";
 import { RegisterPage } from "../RegisterPage/RegisterPage";
 import { WishListPage } from "../WishListPage/WishListPage";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { AdminDashboard } from "../AdminDashboard/AdminDashboard";
 import PrivateRoute from "../common/PrivateRoute/PrivateRoute";
 import EventCardListContainer from "../EventCardList/EventCardListContainer";
+import { AdminDashboard } from "../admin/AdminDashboard/AdminDashboard";
 
 function Content({ location, isLoggedIn }) {
   return (

@@ -2,6 +2,7 @@ import React from "react";
 import "./AddEventModal.css";
 import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
+import { AddEventForm } from "./AddEventForm/AddEventForm";
 
 interface IAddEventModalState {
     show: boolean;
@@ -27,17 +28,11 @@ export class AddEventModal extends React.Component<IAddEventModalProps, IAddEven
   
         <Modal show={show} onHide={this.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Add a new event</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={this.handleSubmit}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
+          <Modal.Body>
+              <AddEventForm />
+          </Modal.Body>
         </Modal>
       </>
     );

@@ -8,7 +8,7 @@ import { AddEventModal } from "../AddEventModal/AddEventModal";
 export class AdminDashboard extends React.Component {
   render() {
     return (
-      <Container fluid className="register-page">
+      <Container fluid className="admin-page">
         <Row className="justify-content-center">
           <Card>
               <Card.Body>

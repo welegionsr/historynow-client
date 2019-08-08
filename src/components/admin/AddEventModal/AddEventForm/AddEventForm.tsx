@@ -184,8 +184,8 @@ export class AddEventForm extends React.Component<{}, IAddEventFormState> {
         price: this.state.price,
         dateInTime: this.state.dateInTime,
         date: this.state.date,
-        typeOfEvent: 1,
-        eraName: "General"
+        typeOfEvent: 1, //default value for now
+        eraName: "General" //default value for now
       };
 
     //   send register request to server

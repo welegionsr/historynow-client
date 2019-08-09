@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {EventCard, IEventCardProps} from './EventCard';
-import { changeWishlist } from '../../actions/actions';
+import { changeWishlist, removeEvent } from '../../actions/actions';
 import { IStore } from '../common/interfaces';
 import { findWishlistEventById } from '../../selectors/events-selectors';
 
@@ -13,6 +13,9 @@ const mapStateToProps = (state: IStore, ownProps: IEventCardProps) => ({
   const mapDispatchToProps = (dispatch: any) => ({
     onWishlistChange: (eventId: string) => {
       dispatch(changeWishlist(eventId));
+    },
+    onEventDeleted: (eventId: string) => {
+      dispatch(removeEvent(eventId));
     }
   });
   

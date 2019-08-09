@@ -52,7 +52,7 @@ export const bulkAddEvent = (events:IHistoryEvent[]) => ({
     events
 });
 
-export const removeEvent = (eventId: number) => ({
+export const removeEvent = (eventId: string) => ({
     type: REMOVE_EVENT,
     eventId
 });

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import "./EventCardList.css";
 import { IHistoryEvent } from "../common/interfaces";
-import CardColumns from "react-bootstrap/CardColumns";
 import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
 import EventCardContainer from "../EventCard/EventCardContainer";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 const URL = "http://localhost:5000/events";
 
@@ -41,24 +42,27 @@ export class EventCardList extends Component<
     const { allEvents } = this.props;
     return (
       <Container className="event-list">
-        <CardColumns>
+        {/* <CardColumns> */}
+        <Row>
           {!isLoading ? (
             allEvents.map((event, index) => {
               return (
-                //<Col sm={12} md={4} lg={3}>
-                <EventCardContainer
-                  event={event}
-                  key={index}
-                  onDelete={this.handleDelete}
-                  onUpdate={this.handleUpdate}
-                />
-                //</Col>
+                <>
+                  {index % 3 === 0 ? <div className="w-100" /> : null}
+                  <Col sm={12} md={4} lg={4} key={"col-" + index} className="card-row">
+                    <EventCardContainer
+                      event={event}
+                      key={"card-" + index}
+                    />
+                  </Col>
+                </>
               );
             })
           ) : (
             <Spinner animation="border" variant="secondary" />
           )}
-        </CardColumns>
+          {/* </CardColumns> */}
+        </Row>
       </Container>
     );
   }
@@ -83,31 +87,6 @@ export class EventCardList extends Component<
       });
   };
 
-  handleDelete = (eventToDelete: IHistoryEvent) => {
-    // const { events } = this.state;
-    // const dataAfterDelete = eventsData.filter(
-    //   event => event.id !== eventToDelete.id
-    // );
-    // this.setState({
-    //   eventsData: dataAfterDelete
-    // });
-  };
-
-  handleUpdate = (eventToUpdate: IHistoryEvent) => {
-    //   const { eventsData } = this.state;
-    //   const newEventsData = eventsData;
-    //   const eventBeforeUpdate = eventsData.filter(
-    //     event => event.id === eventToUpdate.id
-    //   )[0];
-    //   let index = eventsData.indexOf(eventBeforeUpdate);
-    //   eventBeforeUpdate.eventTitle = eventToUpdate.eventTitle;
-    //   eventBeforeUpdate.eventDesc = eventToUpdate.eventDesc;
-    //   newEventsData[index] = eventBeforeUpdate;
-    //   this.setState({
-    //     eventsData: newEventsData
-    //   });
-    // };
-  };
 }
 
 export default EventCardList;

@@ -2,6 +2,7 @@ import React from "react";
 import "./AddEventForm.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { IHistoryEvent } from "../../../common/interfaces";
 
 interface IAddEventFormState {
   title: string;
@@ -15,7 +16,15 @@ interface IAddEventFormState {
   done: boolean;
 }
 
-export class AddEventForm extends React.Component<{}, IAddEventFormState> {
+interface IAddEventFormProps {
+  onEventSubmit: () => void;
+  onEventCreated?: (newEvent: IHistoryEvent) => void;
+}
+
+export class AddEventForm extends React.Component<
+  IAddEventFormProps,
+  IAddEventFormState
+> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -135,7 +144,7 @@ export class AddEventForm extends React.Component<{}, IAddEventFormState> {
             required
           />
           <Form.Text className="text-muted">
-              The date in history as a string (for example "50000 BC")
+            The date in history as a string (for example "50000 BC")
           </Form.Text>
           <Form.Control.Feedback type="invalid">
             Don't forget to add the date in time!
@@ -154,7 +163,7 @@ export class AddEventForm extends React.Component<{}, IAddEventFormState> {
             required
           />
           <Form.Text className="text-muted">
-              The date when we would go into the machine
+            The date when we would go into the machine
           </Form.Text>
           <Form.Control.Feedback type="invalid">
             Don't forget to add the departure date!
@@ -188,7 +197,7 @@ export class AddEventForm extends React.Component<{}, IAddEventFormState> {
         eraName: "General" //default value for now
       };
 
-    //   send register request to server
+      //   send register request to server
       fetch(URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -211,6 +220,18 @@ export class AddEventForm extends React.Component<{}, IAddEventFormState> {
             validated: true,
             done: true
           });
+
+          //create a new IHistoryEvent object before sending to store
+          let newEvent: IHistoryEvent = {
+            ...res.doc
+          };
+          //send new event to store
+          if (this.props.onEventCreated) {
+            this.props.onEventCreated(newEvent);
+          } //typescript made me add this check, I probably missed something somewhere
+
+          //send command back to modal handler to close it after event was added
+          this.props.onEventSubmit();
         });
     }
   };

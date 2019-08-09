@@ -17,7 +17,8 @@ const events = (state: IEventStore = initialEventState, action: any) => {
   switch (action.type) {
     case ADD_EVENT: {
       //add event to state
-      break;
+      let existingEvents = state.allEvents || [];
+      return { ...state, allEvents: [...existingEvents, action.event] };
     }
 
     case BULK_ADD_EVENT: {
@@ -27,8 +28,10 @@ const events = (state: IEventStore = initialEventState, action: any) => {
     }
 
     case REMOVE_EVENT: {
-      //remove event from state
-      break;
+      let eventsAfterRemoval = state.allEvents.filter(
+        event => event._id !== action.eventId
+      );
+      return { ...state, allEvents: eventsAfterRemoval };
     }
 
     case UPDATE_EVENT: {

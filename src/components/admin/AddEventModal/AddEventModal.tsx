@@ -2,7 +2,7 @@ import React from "react";
 import "./AddEventModal.css";
 import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
-import { AddEventForm } from "./AddEventForm/AddEventForm";
+import AddEventFormContainer from "./AddEventForm/AddEventFormContainer";
 
 interface IAddEventModalState {
     show: boolean;
@@ -31,7 +31,7 @@ export class AddEventModal extends React.Component<IAddEventModalProps, IAddEven
             <Modal.Title>Add a new event</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-              <AddEventForm />
+              <AddEventFormContainer onEventSubmit={() => {this.handleClose()}}/>
           </Modal.Body>
         </Modal>
       </>
@@ -40,8 +40,4 @@ export class AddEventModal extends React.Component<IAddEventModalProps, IAddEven
 
   handleClose = () => this.setState({show: false});
   handleShow = () => this.setState({show: true});
-
-  handleSubmit = () => {
-      //add event to db and to store
-  }
 }

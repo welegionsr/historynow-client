@@ -49,11 +49,14 @@ export class EventCardList extends Component<
               return (
                 <>
                   {index % 3 === 0 ? <div className="w-100" /> : null}
-                  <Col sm={12} md={4} lg={4} key={"col-" + index} className="card-row">
-                    <EventCardContainer
-                      event={event}
-                      key={"card-" + index}
-                    />
+                  <Col
+                    sm={12}
+                    md={4}
+                    lg={4}
+                    key={"col-" + index}
+                    className="card-row"
+                  >
+                    <EventCardContainer event={event} key={"card-" + index} />
                   </Col>
                 </>
               );
@@ -86,7 +89,6 @@ export class EventCardList extends Component<
         });
       });
   };
-
 }
 
 export default EventCardList;

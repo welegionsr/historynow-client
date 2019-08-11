@@ -41,8 +41,8 @@ export class RegisterForm extends React.Component<{}, IRegisterFormState> {
     return (
       <Card className="register-form">
         <Card.Body>
-          <Card.Title className="text-align-center">Join us!</Card.Title>
-          <Card.Subtitle>
+          <Card.Title className="text-align-center register-form-title">Join us!</Card.Title>
+          <Card.Subtitle className="register-form-subtitle">
             And go to places you've never been before!
           </Card.Subtitle>
           <hr />
@@ -127,7 +127,7 @@ export class RegisterForm extends React.Component<{}, IRegisterFormState> {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" className="register-button" type="submit">
               Join
             </Button>
           </Form>

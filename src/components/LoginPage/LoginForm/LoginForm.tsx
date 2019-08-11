@@ -30,8 +30,8 @@ class LoginForm extends React.Component<any, ILoginFormState> {
     return (
       <Card className="login-form">
         <Card.Body>
-          <Card.Title className="text-align-center">Hello.</Card.Title>
-          <Card.Subtitle>Please login to continue!</Card.Subtitle>
+          <Card.Title className="text-align-center login-form-title">Hello.</Card.Title>
+          <Card.Subtitle className="login-form-subtitle">Please login to continue!</Card.Subtitle>
           <hr />
           <Form
             noValidate
@@ -64,12 +64,12 @@ class LoginForm extends React.Component<any, ILoginFormState> {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" className="login-button" type="submit">
               Login
             </Button>
           </Form>
           <hr/>
-          <Link to="/register">Never signed up before? Lets go!</Link>
+          <Link className="register-link" to="/register">Never signed up before? Lets go!</Link>
         </Card.Body>
         {done ? <Redirect to="/" /> : null}
       </Card>

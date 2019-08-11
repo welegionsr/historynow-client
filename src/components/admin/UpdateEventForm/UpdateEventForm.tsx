@@ -1,10 +1,10 @@
 import React from "react";
-import "./AddEventForm.css";
+import "./UpdateEventForm.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { IHistoryEvent } from "../../../common/interfaces";
+import { IHistoryEvent } from "../../common/interfaces";
 
-interface IAddEventFormState {
+interface IUpdateEventFormState {
   title: string;
   description: string | undefined;
   country: string | undefined;
@@ -16,30 +16,32 @@ interface IAddEventFormState {
   done: boolean;
 }
 
-interface IAddEventFormProps {
+export interface IUpdateEventFormProps {
   onEventSubmit: () => void;
-  onEventCreated?: (newEvent: IHistoryEvent) => void;
+  onEventUpdated?: (event: IHistoryEvent) => void;
+  eventToUpdate: IHistoryEvent;
 }
 
-export class AddEventForm extends React.Component<
-  IAddEventFormProps,
-  IAddEventFormState
+export class UpdateEventForm extends React.Component<
+  IUpdateEventFormProps,
+  IUpdateEventFormState
 > {
   constructor(props: any) {
     super(props);
-    //prepare the form for new event (empty fields)
+    const { eventToUpdate } = this.props;
+    //load event data into fields
+    if (eventToUpdate)
       this.state = {
-        title: "",
-        description: "",
-        country: "",
-        imageUrl: "",
-        price: 1,
-        date: new Date(Date.now()),
-        dateInTime: "",
+        title: eventToUpdate.title,
+        description: eventToUpdate.description,
+        country: eventToUpdate.country,
+        imageUrl: eventToUpdate.imageUrl,
+        price: eventToUpdate.price,
+        dateInTime: eventToUpdate.dateInTime,
+        date: eventToUpdate.date,
         validated: false,
         done: false
       };
-
   }
   render() {
     const {
@@ -99,7 +101,7 @@ export class AddEventForm extends React.Component<
             required
           />
           <Form.Control.Feedback type="invalid">
-            Can't add an event without a title!
+            Can't update an event without a title!
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group controlId="formDescription">
@@ -173,10 +175,17 @@ export class AddEventForm extends React.Component<
         </Form.Group>
 
         <Button variant="primary" type="submit">
-          Add Event
+          Update Event
         </Button>
+
+        <Button variant="secondary" onClick={this.handleClose}>Cancel</Button>
       </Form>
     );
+  }
+
+  handleClose: () => void = () => {
+      //leave update mode
+      this.props.onEventSubmit();
   }
 
   handleSubmit: (event: React.BaseSyntheticEvent) => void = event => {
@@ -184,6 +193,7 @@ export class AddEventForm extends React.Component<
 
     event.preventDefault();
     event.stopPropagation();
+    console.log("GOING TO UPDATE EVENT");
     if (form.checkValidity() === false) {
     } else {
       const data = {
@@ -198,9 +208,11 @@ export class AddEventForm extends React.Component<
         eraName: "General" //default value for now
       };
 
-      const URL = `http://localhost:5000/events/`;
+      console.log("GOING TO UPDATE EVENT");
+
+      const URL = `http://localhost:5000/events/${this.props.eventToUpdate._id}`;
       const options = {
-        method: "POST",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
       };
@@ -219,22 +231,24 @@ export class AddEventForm extends React.Component<
           console.log(reason);
         })
         .then(res => {
-          console.log(`added new event: `, res.doc._id);
+          console.log(`updated event: `, res.doc._id);
           this.setState({
             validated: true,
             done: true
           });
 
           //create a new IHistoryEvent object before sending to store
-          let newEvent: IHistoryEvent = {
-            ...res.doc
+          let updatedEvent: IHistoryEvent = {
+            ...data, _id: this.props.eventToUpdate._id
           };
+
+          console.log({updatedEvent: updatedEvent});
           //send new event to store
-          if (this.props.onEventCreated) {
-            this.props.onEventCreated(newEvent);
+          if (this.props.onEventUpdated) {
+            this.props.onEventUpdated(updatedEvent);
           } //typescript made me add this check, I probably missed something somewhere
 
-          //send command back to modal handler to close it after event was added
+          //leave update mode
           this.props.onEventSubmit();
         });
     }

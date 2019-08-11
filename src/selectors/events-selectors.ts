@@ -1,4 +1,4 @@
-import { IEventStore } from "../components/common/interfaces";
+import { IEventStore, IHistoryEvent } from "../components/common/interfaces";
 
 export const getEventsState = (store: IEventStore) => store;
 
@@ -26,6 +26,22 @@ export const findWishlistEventById = (store: IEventStore, eventId: string) => {
 
   if (wishlistEvents) {
     return wishlistEvents.some(event => event === eventId);
+  }
+
+  return false;
+};
+
+export const getWishlistEventsObjects = (store: IEventStore) => {
+  const wishlistEventsIds = getWishlistEvents(store);
+  const allEvents = getAllEvents(store);
+  let wishListObjects: IHistoryEvent[] = [];
+
+  if (wishlistEventsIds) {
+    wishlistEventsIds.forEach((eventId, index) => {
+      let event = allEvents.find(event => event._id === eventId);
+      if (event) wishListObjects.push(event);
+    });
+    return wishListObjects;
   }
 
   return false;

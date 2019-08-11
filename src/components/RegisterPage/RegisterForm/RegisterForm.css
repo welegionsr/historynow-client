@@ -1,11 +1,41 @@
 .register-form {
-    padding: 8px;
-    background: rgba(218, 234, 240, 0.733);
-    border-radius: 12px;
-    border-bottom: 8px solid rgba(111, 155, 172, 0.733);
-    border-top: 8px solid rgba(111, 155, 172, 0.733);
-    box-shadow: 0px 0px 4px 1px rgba(128, 128, 128, 0.4);
-    text-align: center;
-    text-shadow: 2px 2px 2px rgba(199, 209, 238, 0.87);
-    color: rgb(50, 46, 56);
+  padding: 8px;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.73) 0%,
+    #a595bb 160%
+  );
+  border-radius: 12px;
+  border-bottom: 8px solid rgba(42, 31, 87, 0.73);
+  border-top: 8px solid rgba(42, 31, 87, 0.73);
+  box-shadow: 0px 0px 4px 1px rgba(128, 128, 128, 0.4);
+  text-align: center;
+  text-shadow: 2px 2px 2px rgba(199, 209, 238, 0.87);
+  color: rgb(50, 46, 56);
+}
+
+.register-form-title {
+  font-size: 2rem;
+  font-family: "Exo", sans-serif;
+}
+
+.register-form-subtitle {
+  font-size: 1.1rem;
+  font-family: "Exo", sans-serif;
+}
+
+.form-label {
+  font-family: "Exo", sans-serif;
+}
+
+.register-button {
+  color: white;
+  background-color: rgba(42, 31, 87, 0.73);
+  font-family: "Exo", sans-serif;
+  border: none;
+  padding: 10px 20px;
+}
+
+.register-button:hover {
+  background-color: rgba(84, 62, 173, 0.73);
 }

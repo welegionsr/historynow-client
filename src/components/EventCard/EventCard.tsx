@@ -13,6 +13,7 @@ import {
   faMinusCircle
 } from "@fortawesome/free-solid-svg-icons";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
+import UpdateEventFormContainer from "../admin/UpdateEventForm/UpdateEventFormContainer";
 
 export interface IEventCardProps {
   event: IHistoryEvent;
@@ -24,84 +25,118 @@ export interface IEventCardProps {
 
 export interface IEventCardState {
   //for when you'll want to sync the data
+  updateMode: boolean;
 }
 
 export class EventCard extends React.Component<
   IEventCardProps,
   IEventCardState
 > {
+  state = {
+    updateMode: false
+  };
+
   render() {
     const { event, inWishlist, user } = this.props;
     let isAdmin: boolean = user ? user.isAdmin : false;
-    return (
-      <Card className="event-card-test">
-        <Card.Body>
-          <Card.Title>{event.title}</Card.Title>
-          <Card.Text>{event.description}</Card.Text>
-        </Card.Body>
-        {event.imageUrl ? <img src={event.imageUrl} alt="" /> : null}
-        <div className="card-body-test">
-          <Card.Title>{event.title}</Card.Title>
-          <Card.Text>{event.description}</Card.Text>
-          <ListGroup className="list-group-flush">
-            <ListGroupItem>Date in History: {event.dateInTime}</ListGroupItem>
-            <ListGroupItem>Price: ${event.price}</ListGroupItem>
-            {event.country ? (
-              <ListGroupItem>Country: {event.country}</ListGroupItem>
-            ) : null}
-            {event.city ? (
-              <ListGroupItem>City: {event.city}</ListGroupItem>
-            ) : null}
-          </ListGroup>
+    const { updateMode } = this.state;
+    if (!updateMode)
+      return (
+        <Card className="event-card-test">
+          {inWishlist ? <div className="card-in-wishlist">In your wishlist!</div> : null}
           <Card.Body>
-            <Button
-              variant={inWishlist ? "danger" : "primary"}
-              className="card-body-button"
-              onClick={() => {
-                this.handleWishlistChange(event._id);
-              }}
-            >
-              {inWishlist ? (
-                <span>
-                  <FontAwesomeIcon
-                    icon={faMinusCircle}
-                    className="button-icon"
-                  />
-                  Remove from Wishlist
-                </span>
-              ) : (
-                <span>
-                  <FontAwesomeIcon
-                    icon={faPlusCircle}
-                    className="button-icon"
-                  />
-                  Add to Wishlist
-                </span>
-              )}
-            </Button>
+            <Card.Title>{event.title}</Card.Title>
+            <Card.Text>{event.description}</Card.Text>
           </Card.Body>
-          {isAdmin ? (
-            <Card.Footer>
-              <ButtonGroup>
-                <Button variant="dark" onClick={() => this.handleEdit(event._id)}>
-                  <FontAwesomeIcon icon={faEdit} className="button-icon" />
-                  <span>Edit</span>
-                </Button>
-                <Button variant="danger" onClick={() => this.handleDelete(event._id)}>
-                  <FontAwesomeIcon icon={faTrash} className="button-icon" />
-                  <span>Delete</span>
-                </Button>
-              </ButtonGroup>
-            </Card.Footer>
-          ) : null}
-        </div>
-      </Card>
-    );
+          {event.imageUrl ? <img src={event.imageUrl} alt="" /> : null}
+          <div className="card-body-test">
+            <Card.Title>{event.title}</Card.Title>
+            <Card.Text>{event.description}</Card.Text>
+            <ListGroup className="list-group-flush">
+              <ListGroupItem>Date in History: {event.dateInTime}</ListGroupItem>
+              <ListGroupItem>Price: ${event.price}</ListGroupItem>
+              {event.country ? (
+                <ListGroupItem>Country: {event.country}</ListGroupItem>
+              ) : null}
+              {event.city ? (
+                <ListGroupItem>City: {event.city}</ListGroupItem>
+              ) : null}
+            </ListGroup>
+            <Card.Body>
+              <Button
+                variant={inWishlist ? "danger" : "primary"}
+                className="card-body-button"
+                onClick={() => {
+                  this.handleWishlistChange(event._id);
+                }}
+              >
+                {inWishlist ? (
+                  <span>
+                    <FontAwesomeIcon
+                      icon={faMinusCircle}
+                      className="button-icon"
+                    />
+                    Remove from Wishlist
+                  </span>
+                ) : (
+                  <span>
+                    <FontAwesomeIcon
+                      icon={faPlusCircle}
+                      className="button-icon"
+                    />
+                    Add to Wishlist
+                  </span>
+                )}
+              </Button>
+            </Card.Body>
+            {isAdmin ? (
+              <Card.Footer>
+                <ButtonGroup>
+                  <Button
+                    variant="dark"
+                    className="admin-button"
+                    onClick={() => this.setUpdateMode(true)}
+                  >
+                    <FontAwesomeIcon icon={faEdit} className="button-icon" />
+                    <span>Edit</span>
+                  </Button>
+                  <Button
+                    variant="danger"
+                    className="admin-button"
+                    onClick={() => this.handleDelete(event._id)}
+                  >
+                    <FontAwesomeIcon icon={faTrash} className="button-icon" />
+                    <span>Delete</span>
+                  </Button>
+                </ButtonGroup>
+              </Card.Footer>
+            ) : null}
+          </div>
+        </Card>
+      );
+    //show update event card if update mode is on
+    else
+      return (
+        <Card className="event-card-update-mode">
+          <Card.Body>
+            <UpdateEventFormContainer
+              eventToUpdate={this.props.event}
+              onEventSubmit={() => {
+                this.setUpdateMode(false);
+              }}
+            />
+          </Card.Body>
+        </Card>
+      );
   }
+
+  setUpdateMode: (updateMode: boolean) => void = updateMode => {
+    this.setState({ updateMode });
+  };
 
   handleEdit: (eventId: string) => void = eventId => {
-
-  }
+    //when admin user submits the edit event form
+  };
 
   handleDelete: (eventId: string) => void = eventId => {
     const { onEventDeleted } = this.props;
@@ -123,9 +158,7 @@ export class EventCard extends React.Component<
         console.log(reason);
       })
       .then(() => {
-        console.log(
-          `event ${eventId} removed successfully`
-        );
+        console.log(`event ${eventId} removed successfully`);
 
         //let the store know the an event was deleted
         if (onEventDeleted) onEventDeleted(eventId); //typescript made me add this check, I probably missed something somewhere

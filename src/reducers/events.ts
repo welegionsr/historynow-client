@@ -35,8 +35,19 @@ const events = (state: IEventStore = initialEventState, action: any) => {
     }
 
     case UPDATE_EVENT: {
-      //update EVENT in state
-      break;
+      //find index of the event being updated
+      console.log(action.event)
+      let eventIndex = state.allEvents.findIndex(
+        event => event._id === action.event._id
+      );
+      console.log("trying to update store, the index found is: ", eventIndex);
+      console.log("updated event details:");
+      console.log(action.event);
+      //create new array of events to push to store
+      let eventsAfterUpdate = state.allEvents;
+      //put the updated event in place of the old one
+      eventsAfterUpdate[eventIndex] = action.event;
+      return { ...state, allEvents: eventsAfterUpdate };
     }
 
     case CHANGE_WISHLIST: {

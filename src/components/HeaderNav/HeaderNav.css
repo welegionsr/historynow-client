@@ -1,3 +1,74 @@
 .header {
     margin-bottom: 8px;
+    background-color: #2e3740;
+    /* align-items: baseline;    makes the menu better aligned with the logo, but causes weird bug when not logged in */
+}
+
+.nav-link {
+    color: white !important;
+    font-family: "Exo", sans-serif;
+    transition: all .3s;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-link:hover {
+    color: white !important;
+    font-family: "Exo", sans-serif;
+    border-bottom: 2px solid rgb(231, 224, 231);
+}
+
+.nav-link.active {
+    border-bottom: 2px solid rgb(231, 224, 231);
+}
+
+.logo-link {
+    color: white;
+    text-decoration: none;
+    font-family: "Exo", sans-serif;
+    transition: all .3s;
+}
+
+.logo-link:hover {
+    color: rgb(209, 198, 137);
+    text-decoration: none;
+}
+
+.logo-icon {
+    padding: 2px 8px;
+    background-color: rgb(79, 69, 116);
+    margin: 0 4px;
+    border-radius: 12px;
+    font-family: "Exo", sans-serif;
+    font-weight: 700;
+    text-shadow: 0px 0px 3px 2px rgba(128, 128, 128, 0.445);
+    border: 2px solid rgb(143, 133, 179);
+    border-top: 4px solid rgb(143, 133, 179);
+    border-bottom: 4px solid rgb(143, 133, 179);
+    cursor: default;
+    transition: all .3s;
+}
+
+.header:hover .logo-icon {
+    color: rgb(209, 198, 137);
+}
+
+.header-user-area {
+    padding: .4rem 2rem;
+}
+
+.header-greeting {
+    color: white;
+    font-family: "Exo", sans-serif;
+}
+
+.header-logout-btn {
+    padding: 4px 12px;
+    background-color: rgb(189, 127, 47);
+    border: none;
+    font-family: "Exo", sans-serif;
+    margin-left: 8px;
+}
+
+.header-logout-btn:hover {
+    background-color: rgb(165, 96, 32);
 }

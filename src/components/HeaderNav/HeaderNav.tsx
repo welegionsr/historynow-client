@@ -18,26 +18,35 @@ class HeaderNav extends React.Component<IHeaderNavProps> {
     const isAdmin = user && user.isAdmin;
     console.log(user);
     return (
-      <Navbar bg="light" className="header" expand="lg">
+      <Navbar className="header" variant="dark" expand="lg">
         <Navbar.Brand>
-          <Link to="/">HistoryNow</Link>
+          <span className="logo-icon">H</span>
+          <Link className="logo-link" to="/">
+            HistoryNow
+          </Link>
         </Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse id="header-navbar">
-          <Nav className="mr-auto">
-            <LinkContainer to="/wishlist">
-              <Nav.Link>Wishlist</Nav.Link>
-            </LinkContainer>
+          <Nav className="mr-auto" style={{ flexGrow: 1 }}>
+            {user ? (
+              <LinkContainer to="/wishlist">
+                <Nav.Link>Wishlist</Nav.Link>
+              </LinkContainer>
+            ) : null}
             {isAdmin ? (
               <LinkContainer to="/admin">
                 <Nav.Link>Admin Dashboard</Nav.Link>
               </LinkContainer>
             ) : null}
+            <div style={{ flex: 1 }} />
             {user ? (
-              <div>
-                <span>Hello {user.firstName}! </span>
+              <div className="header-user-area">
+                <span className="header-greeting">
+                  Hello {user.firstName}!{" "}
+                </span>
                 <Button
                   variant="secondary"
+                  className="header-logout-btn"
                   onClick={() => {
                     this.props.onLogout();
                   }}
@@ -47,7 +56,7 @@ class HeaderNav extends React.Component<IHeaderNavProps> {
               </div>
             ) : (
               <LinkContainer to="/login">
-                <Nav.Link>Login</Nav.Link>
+                <Nav.Link className="header-link">Login</Nav.Link>
               </LinkContainer>
             )}
           </Nav>

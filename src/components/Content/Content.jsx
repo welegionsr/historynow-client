@@ -3,7 +3,7 @@ import "./Content.css";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { LoginPage } from "../LoginPage/LoginPage";
 import { RegisterPage } from "../RegisterPage/RegisterPage";
-import { WishListPage } from "../WishListPage/WishListPage";
+import WishListPage from "../WishListPage/WishListPage";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import PrivateRoute from "../common/PrivateRoute/PrivateRoute";
 import EventCardListContainer from "../EventCardList/EventCardListContainer";

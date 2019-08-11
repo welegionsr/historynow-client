@@ -12,6 +12,7 @@ I guess it's something to do with sync/async, something happens too fast somewhe
 There's validation in the Mongoose schema though.
 6. I changed the behavior of wishlist items ordering - I don't re-order them after an event is wishlisted - it looks bad.
 I just have an indicator on the card, and I have a dedicated wishlist page.
+7. Some of the typescript isn't perfect :)
 
 
 That's it I guess, hopefully what's there will work properly :)

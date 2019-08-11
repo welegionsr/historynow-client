@@ -7,12 +7,15 @@ import Button from "react-bootstrap/Button";
 import { IUserType } from "../../common/interfaces";
 import { Link, Redirect } from "react-router-dom";
 import { changeLoggedUser, getUserWishlist } from "../../../actions/actions";
+import Alert from "react-bootstrap/Alert";
 
 interface ILoginFormState {
   userNameValue: string;
   passwordValue: string;
   validated: boolean;
   done: boolean;
+  showError?: boolean;
+  errorMessage?: string;
 }
 
 class LoginForm extends React.Component<any, ILoginFormState> {
@@ -26,13 +29,14 @@ class LoginForm extends React.Component<any, ILoginFormState> {
     };
   }
   render() {
-    const { validated, done } = this.state;
+    const { validated, done, errorMessage, showError } = this.state;
     return (
       <Card className="login-form">
         <Card.Body>
           <Card.Title className="text-align-center login-form-title">Hello.</Card.Title>
           <Card.Subtitle className="login-form-subtitle">Please login to continue!</Card.Subtitle>
           <hr />
+          {showError ? <Alert variant="danger" className="error-message">{errorMessage}</Alert> : null}
           <Form
             noValidate
             validated={validated}
@@ -107,7 +111,6 @@ class LoginForm extends React.Component<any, ILoginFormState> {
         body: JSON.stringify(credentials)
       })
         .then(response => {
-          console.log(response);
           if (response.status < 200 || response.status > 300) {
             return Promise.reject("Wrong username or password!");
           }
@@ -116,26 +119,29 @@ class LoginForm extends React.Component<any, ILoginFormState> {
         })
         .then(
           (user: IUserType) => {
-            console.log("Welcome ", user.firstName, user.lastName);
-            console.log("User details: ", user);
             //send user details to global state
             this.props.dispatch(changeLoggedUser(user));
             //send wishlist to global state
-            console.log("user wishlist: " + user.savedEvents);
             if (user.savedEvents && user.savedEvents.length > 0) this.props.dispatch(getUserWishlist(user.savedEvents));
             this.setState({
               validated: true,
-              done: true
+              done: true,
+              showError: false
             });
           },
           reason => {
-            console.log(reason);
+            this.showError(reason);
           }
         );
     }
-
-
   };
+
+  showError: (message: string) => void = message => {
+    this.setState({
+      errorMessage: message,
+      showError: true
+    })
+  }
 }
 
 export default connect()(LoginForm);

@@ -8,6 +8,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import PrivateRoute from "../common/PrivateRoute/PrivateRoute";
 import EventCardListContainer from "../EventCardList/EventCardListContainer";
 import { AdminDashboard } from "../admin/AdminDashboard/AdminDashboard";
+import {WelcomePage} from '../WelcomePage/WelcomePage';
 
 function Content({ location, isLoggedIn }) {
   return (
@@ -22,6 +23,7 @@ function Content({ location, isLoggedIn }) {
             <PrivateRoute exact authed={isLoggedIn} path="/" component={EventCardListContainer} />
             <PrivateRoute authed={isLoggedIn} path="/wishlist" component={WishListPage} />
             <PrivateRoute authed={isLoggedIn} path="/admin" component={AdminDashboard} />
+            <Route path="/welcome" component={WelcomePage} />
             <Route path="/login" component={LoginPage} />
             <Route path="/register" component={RegisterPage} />
           </Switch>

@@ -24,7 +24,6 @@ const users = (state: IUserStore = initialUserState, action: any) => {
 
         case CHANGE_LOGGED_USER: {
             //save the user details of the one who's logged in
-            console.log(action.user);
             return {...state, currentUser: action.user}
         }
 

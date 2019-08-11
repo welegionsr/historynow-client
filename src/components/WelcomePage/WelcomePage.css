@@ -1,0 +1,84 @@
+.welcome-page {
+  min-height: 30rem;
+  position: relative;
+  display: table;
+  width: 100%;
+  height: auto;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  background: radial-gradient(
+      rgba(87, 86, 86, 0.329) 0%,
+      rgba(44, 40, 40, 0.801) 100%
+    ),
+    url("https://images.pexels.com/photos/951531/pexels-photo-951531.jpeg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.welcome-main h1 {
+  font-size: 4rem;
+  margin: 0;
+  padding: 0;
+  text-shadow: 0px 0px 3px rgba(128, 128, 128, 0.53);
+  color: #ececec;
+}
+
+.welcome-main h2 {
+  font-size: 2rem;
+  text-shadow: 0px 0px 3px rgba(128, 128, 128, 0.53);
+  color: #ececec;
+}
+
+@media (min-width: 992px) {
+  .welcome-page {
+    height: 100vh;
+  }
+  .welcome-page h1 {
+    font-size: 5.5rem;
+  }
+}
+
+.welcome-main {
+  font-family: "Exo", sans-serif;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.247);
+  padding: 20px 10px;
+  border-radius: 12px;
+}
+
+p.text-muted {
+  font-size: 0.7rem;
+}
+
+button > a {
+    color: white;
+    text-decoration: none;
+}
+
+button > a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.login-button {
+    color: white;
+    background-color: rgba(42, 31, 87, 0.73);
+    font-family: "Exo", sans-serif;
+    border: none;
+    padding: 10px 20px;
+  }
+  
+  .login-button:hover {
+    background-color: rgba(84, 62, 173, 0.73);
+  }
+  
+  .register-link {
+      color: rgba(56, 25, 92, 0.911);
+      font-family: "Exo", sans-serif;
+      transition: all .3s;
+  }
+  .register-link:hover {
+      text-decoration: none;
+      color: rgba(85, 32, 76, 0.911);
+  }

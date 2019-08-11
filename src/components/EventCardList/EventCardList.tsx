@@ -19,6 +19,7 @@ export interface IEventCardListProps {
 
 export interface IEventCardListState {
   isLoading: boolean;
+  // intervalId?: NodeJS.Timeout;
 }
 
 export class EventCardList extends Component<
@@ -33,8 +34,17 @@ export class EventCardList extends Component<
   }
 
   componentDidMount() {
-    console.log(this.props);
-    if (this.props.allEvents.length === 0) this.getEventsData();
+    if (this.props.allEvents.length === 0) {
+      // a pretty bad implementation of polling:
+      // let intervalId = setInterval(()=> this.getEventsData(), 2000);
+      // this.setState({intervalId});
+      this.getEventsData();
+    }
+  }
+
+  componentWillUnmount() {
+    //part of the bad implementation of polling:
+    // if (this.state.intervalId) clearInterval(this.state.intervalId);
   }
 
   render() {
@@ -79,8 +89,6 @@ export class EventCardList extends Component<
     await fetch(URL)
       .then(res => res.json())
       .then(data => {
-        console.log("events pulled:");
-        console.log(data);
         //send the data to store
         this.props.onEventsPulled(data);
 

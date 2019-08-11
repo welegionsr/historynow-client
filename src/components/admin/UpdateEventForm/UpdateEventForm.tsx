@@ -3,6 +3,7 @@ import "./UpdateEventForm.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { IHistoryEvent } from "../../common/interfaces";
+import Alert from "react-bootstrap/Alert";
 
 interface IUpdateEventFormState {
   title: string;
@@ -14,6 +15,8 @@ interface IUpdateEventFormState {
   date: Date;
   validated: boolean;
   done: boolean;
+  showError?: boolean;
+  errorMessage?: string;
 }
 
 export interface IUpdateEventFormProps {
@@ -52,7 +55,9 @@ export class UpdateEventForm extends React.Component<
       imageUrl,
       price,
       dateInTime,
-      date
+      date,
+      showError,
+      errorMessage
     } = this.state;
     return (
       <Form
@@ -60,6 +65,11 @@ export class UpdateEventForm extends React.Component<
         validated={validated}
         onSubmit={(e: React.BaseSyntheticEvent) => this.handleSubmit(e)}
       >
+        {showError ? (
+          <Alert variant="danger" className="error-message">
+            {errorMessage}
+          </Alert>
+        ) : null}
         <Form.Group controlId="formCountry">
           <Form.Label>Country</Form.Label>
           <Form.Control
@@ -178,22 +188,23 @@ export class UpdateEventForm extends React.Component<
           Update Event
         </Button>
 
-        <Button variant="secondary" onClick={this.handleClose}>Cancel</Button>
+        <Button variant="secondary" onClick={this.handleClose}>
+          Cancel
+        </Button>
       </Form>
     );
   }
 
   handleClose: () => void = () => {
-      //leave update mode
-      this.props.onEventSubmit();
-  }
+    //leave update mode
+    this.props.onEventSubmit();
+  };
 
   handleSubmit: (event: React.BaseSyntheticEvent) => void = event => {
     const form = event.currentTarget;
 
     event.preventDefault();
     event.stopPropagation();
-    console.log("GOING TO UPDATE EVENT");
     if (form.checkValidity() === false) {
     } else {
       const data = {
@@ -208,9 +219,9 @@ export class UpdateEventForm extends React.Component<
         eraName: "General" //default value for now
       };
 
-      console.log("GOING TO UPDATE EVENT");
-
-      const URL = `http://localhost:5000/events/${this.props.eventToUpdate._id}`;
+      const URL = `http://localhost:5000/events/${
+        this.props.eventToUpdate._id
+      }`;
       const options = {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -220,29 +231,24 @@ export class UpdateEventForm extends React.Component<
       //   send request to server
       fetch(URL, options)
         .then(response => {
-          console.log(response);
           if (response.status < 200 || response.status > 300) {
             return Promise.reject("something went wrong, try again later!");
           }
 
           return response.json();
         })
-        .catch(reason => {
-          console.log(reason);
-        })
         .then(res => {
-          console.log(`updated event: `, res.doc._id);
           this.setState({
             validated: true,
-            done: true
+            done: true,
+            showError: false
           });
 
           //create a new IHistoryEvent object before sending to store
           let updatedEvent: IHistoryEvent = {
-            ...data, _id: this.props.eventToUpdate._id
+            ...data,
+            _id: this.props.eventToUpdate._id
           };
-
-          console.log({updatedEvent: updatedEvent});
           //send new event to store
           if (this.props.onEventUpdated) {
             this.props.onEventUpdated(updatedEvent);
@@ -250,7 +256,17 @@ export class UpdateEventForm extends React.Component<
 
           //leave update mode
           this.props.onEventSubmit();
+        })
+        .catch(reason => {
+          this.showError(reason);
         });
     }
+  };
+
+  showError: (message: string) => void = message => {
+    this.setState({
+      errorMessage: message,
+      showError: true
+    });
   };
 }

@@ -6,7 +6,7 @@ import {
   CHANGE_WISHLIST,
   GET_USER_WISHLIST
 } from "../actions/actions";
-import { IEventStore } from "../components/common/interfaces";
+import { IEventStore, IHistoryEvent } from "../components/common/interfaces";
 
 const initialEventState: IEventStore = {
   allEvents: [],
@@ -24,7 +24,14 @@ const events = (state: IEventStore = initialEventState, action: any) => {
     case BULK_ADD_EVENT: {
       //add an array of events to state
       let existingEvents = state.allEvents || [];
-      return { ...state, allEvents: [...existingEvents, ...action.events] };
+      //check if any of the new events already exist in the list
+      let afterFilterEvents = existingEvents;
+      action.events.forEach((newEvent: IHistoryEvent, index: number) => {
+        let result = existingEvents.find(event => event._id === newEvent._id);
+        if (!result) return;
+        afterFilterEvents.splice(afterFilterEvents.indexOf(result), 1);
+      })
+      return { ...state, allEvents: [...afterFilterEvents, ...action.events] };
     }
 
     case REMOVE_EVENT: {
@@ -36,13 +43,10 @@ const events = (state: IEventStore = initialEventState, action: any) => {
 
     case UPDATE_EVENT: {
       //find index of the event being updated
-      console.log(action.event)
+
       let eventIndex = state.allEvents.findIndex(
         event => event._id === action.event._id
       );
-      console.log("trying to update store, the index found is: ", eventIndex);
-      console.log("updated event details:");
-      console.log(action.event);
       //create new array of events to push to store
       let eventsAfterUpdate = state.allEvents;
       //put the updated event in place of the old one

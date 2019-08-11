@@ -4,6 +4,7 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Redirect } from "react-router-dom";
+import Alert from 'react-bootstrap/Alert';
 
 interface IRegisterFormState {
   userName: string;
@@ -13,7 +14,10 @@ interface IRegisterFormState {
   email: string;
   validated: boolean;
   done: boolean;
+  showError?: boolean;
+  errorMessage?: string;
 }
+
 
 export class RegisterForm extends React.Component<{}, IRegisterFormState> {
   constructor(props: any) {
@@ -36,16 +40,21 @@ export class RegisterForm extends React.Component<{}, IRegisterFormState> {
       firstName,
       lastName,
       email,
-      done
+      done,
+      showError,
+      errorMessage
     } = this.state;
     return (
       <Card className="register-form">
         <Card.Body>
-          <Card.Title className="text-align-center register-form-title">Join us!</Card.Title>
+          <Card.Title className="text-align-center register-form-title">
+            Join us!
+          </Card.Title>
           <Card.Subtitle className="register-form-subtitle">
             And go to places you've never been before!
           </Card.Subtitle>
           <hr />
+          {showError ? <Alert variant="danger" className="error-message">{errorMessage}</Alert> : null}
           <Form
             noValidate
             validated={validated}
@@ -132,7 +141,7 @@ export class RegisterForm extends React.Component<{}, IRegisterFormState> {
             </Button>
           </Form>
         </Card.Body>
-        {done ? <Redirect to="/login"/>: null}
+        {done ? <Redirect to="/login" /> : null}
       </Card>
     );
   }
@@ -160,23 +169,31 @@ export class RegisterForm extends React.Component<{}, IRegisterFormState> {
         body: JSON.stringify(data)
       })
         .then(response => {
-          console.log(response);
+          if (response.status === 401){
+            return Promise.reject("username already taken!");
+          }
           if (response.status < 200 || response.status > 300) {
             return Promise.reject("something went wrong, try again later!");
           }
-
           return response.json();
         })
-        .catch(reason => {
-          console.log(reason);
-        })
         .then(res => {
-          console.log("Welcome new user: ", res.addedUsername);
           this.setState({
             validated: true,
-            done: true
+            done: true,
+            showError: false
           });
+        })
+        .catch(reason => {
+          this.showError(reason);
         });
     }
   };
+
+  showError: (message: string) => void = message => {
+    this.setState({
+      errorMessage: message,
+      showError: true
+    })
+  }
 }

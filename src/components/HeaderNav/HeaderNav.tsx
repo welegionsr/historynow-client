@@ -16,7 +16,6 @@ class HeaderNav extends React.Component<IHeaderNavProps> {
   render() {
     const { user } = this.props;
     const isAdmin = user && user.isAdmin;
-    console.log(user);
     return (
       <Navbar className="header" variant="dark" expand="lg">
         <Navbar.Brand>

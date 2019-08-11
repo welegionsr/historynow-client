@@ -183,7 +183,7 @@ export class EventCard extends React.Component<
     };
     //send request to server
     fetch(URL, {
-      method: inWishlist ? "DELETE" : "POST",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     })

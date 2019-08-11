@@ -1,5 +1,4 @@
 .header {
-    margin-bottom: 8px;
     background-color: #2e3740;
     /* align-items: baseline;    makes the menu better aligned with the logo, but causes weird bug when not logged in */
 }

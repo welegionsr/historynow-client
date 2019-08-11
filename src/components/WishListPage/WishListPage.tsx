@@ -17,6 +17,12 @@ class WishListPage extends React.Component<IWishListPageProps> {
     return (
       <Container className="wishlist-page">
         <Row>
+          {this.props.wishlist.length <= 0 ? (
+            <div className="no-wishlist">
+              No events added to the wishlist yet :(
+              <div className="text-muted">Try adding some!</div>
+            </div>
+          ) : null}
           {this.props.wishlist.map((event, index) => {
             return (
               <>

@@ -1,3 +1,22 @@
+Dont forget to populate the MongoDB database using the scripts in /mongo-scripts.
+
+Some things not working/not existing:
+
+1. Nothing in admin dashboard other than creating an event.
+2. No polling / socket.io - didn't have time to do it properly (some bad polling implementation was kept as comment).
+3. Site is mostly responsive, but the event cards aren't functional for mobile devices (use hover effects).
+Didn't have time to make a different layout for mobile devices
+4. Some weird bug after updating an event - it doesn't update straight away, but if you check the redux store, you'll see it did update. If you navigate out and back to the page, it'll show as updated.
+I guess it's something to do with sync/async, something happens too fast somewhere.
+5. No hard validation (regex) on form fields, just very basic validation (client side). 
+There's validation in the Mongoose schema though.
+
+
+That's it I guess, hopefully what's there will work properly :)
+
+
+--------------------------------------------
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

@@ -10,6 +10,8 @@ Didn't have time to make a different layout for mobile devices
 I guess it's something to do with sync/async, something happens too fast somewhere.
 5. No hard validation (regex) on form fields, just very basic validation (client side). 
 There's validation in the Mongoose schema though.
+6. I changed the behavior of wishlist items ordering - I don't re-order them after an event is wishlisted - it looks bad.
+I just have an indicator on the card, and I have a dedicated wishlist page.
 
 
 That's it I guess, hopefully what's there will work properly :)
